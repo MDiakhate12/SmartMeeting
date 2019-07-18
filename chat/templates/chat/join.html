@@ -17,7 +17,7 @@
         $('#join-form').submit(function () {
           var user = $('#nick-input').val();
           if(user) {
-            window.location = '/{{ room_id|escapejs }}?user=' + user;
+            window.location = '{{ room_id|escapejs }}?user=' + user;
           }
           return false;
         });

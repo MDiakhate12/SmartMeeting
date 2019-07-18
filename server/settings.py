@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import dj_database_url
+from django_eventstream.utils import have_channels
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-from django_eventstream.utils import have_channels
 
 # Application definition
 
@@ -38,7 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    'authentification',
+    'main',
+    'django.contrib.sites',
+    'invitations',
+    'easy_select2'
 ]
+
+SITE_ID = 1
 
 if have_channels():
     INSTALLED_APPS.append('channels')
@@ -53,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -83,10 +93,16 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {}
-
-import dj_database_url
-DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'smartmeeting',
+        'USER': 'mouhammad',
+        'PASSWORD': 'droite15',
+        'HOST': '',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -126,10 +142,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "main/static")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+from .email_info import *
+
+EMAIL_HOST = EMAIL_HOST
+EMAIL_PORT = EMAIL_PORT
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = EMAIL_USE_TLS
+
 
 ASGI_APPLICATION = 'server.routing.application'
 
 GRIP_URL = os.environ.get('GRIP_URL')
 
 EVENTSTREAM_STORAGE_CLASS = 'django_eventstream.storage.DjangoModelStorage'
+
+
+EVENTSTREAM_ALLOW_ORIGIN = 'http://127.0.0.1:4000'
+EVENTSTREAM_ALLOW_CREDENTIALS = True

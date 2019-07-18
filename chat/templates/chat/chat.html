@@ -1,32 +1,24 @@
+{% extends 'main/dashboard_base.html' %}
+
 {% load static %}
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
+  {% block header  %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Chat</title>
     <meta name="description" content="Chat">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'chat/normalize.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'chat/main.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/normalize.min.css' %}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/main.css' %}"> -->
 
     <script src="{% static 'django_eventstream/json2.js' %}"></script>
     <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
     <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
     <script src="{% static 'chat/jquery-3.2.1.min.js' %}"></script>
 
-  </head>
+  {% endblock %}
 
-  <body>
-    <header id="chat-header">
-      <span id="user-label">{{ user }}</span>
-      <span>#{{ room_id }}</span>
-      <span id="code-link">
-        <a href="https://github.com/fanout/django-eventstream/tree/master/examples/chat">code</a>
-      </span>
-    </header>
-
+  {% block content %}
     <div id="chat-elements">
       <div id="chat-log">
         {% for msg in messages %}
@@ -42,7 +34,8 @@
       </form>
     </div>
 
-  </body>
+    {% endblock %}
+  {% block script %}
   <script type="text/javascript">
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
       let finalTranscript = '';
@@ -171,7 +164,7 @@
             $('#chat-send-button').text('Send');
             $('#chat-send-button').removeAttr('disabled');
           });
-
+          finalTranscript = '';
           return false;
         };
 
@@ -182,5 +175,4 @@
         startChat('{{ user|escapejs }}');
       });
     </script>
-  
-</html>
+    {% endblock %}
