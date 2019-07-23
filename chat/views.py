@@ -8,12 +8,16 @@ from django.shortcuts import render, redirect
 from django.core.serializers.json import DjangoJSONEncoder
 from django_eventstream import send_event, get_current_event_id
 from .models import ChatRoom, ChatMessage
+from django.contrib.auth.models import User
 
 def home(request, room_id=None):
-	user = request.GET.get('user')
+	user = request.user
+	print('----------------------------------------------------------------------')
+	print(user)
+	print('----------------------------------------------------------------------')
 	if user:
 		if not room_id:
-			return redirect('/default?' + request.GET.urlencode())
+			return redirect('/default?' + user.username)
 
 		last_id = get_current_event_id(['room-%s' % room_id])
 
@@ -33,10 +37,10 @@ def home(request, room_id=None):
 		context['messages'] = msgs
 		context['user'] = user
 		return render(request, 'chat/chat.html', context)
-	else:
-		context = {}
-		context['room_id'] = room_id or 'default'
-		return render(request, 'chat/join.html', context)
+	# else:
+	# 	context = {}
+	# 	context['room_id'] = room_id or 'default'
+	# 	return render(request, 'chat/join.html', context)
 
 def messages(request, room_id):
 	if request.method == 'GET':
@@ -70,7 +74,8 @@ def messages(request, room_id):
 		text = request.POST['text']
 		with transaction.atomic():
 			msg = ChatMessage(room=room, user=mfrom, text=text)
-			msg.save()
+			sender = ChatMessage(room=room, user=mfrom, sender=User.objects.get(username=mfrom), text=text)
+			sender.save()
 			send_event('room-%s' % room_id, 'message', msg.to_data())
 		body = json.dumps(msg.to_data(), cls=DjangoJSONEncoder) + '\n'
 		return HttpResponse(body, content_type='application/json')

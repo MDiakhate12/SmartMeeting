@@ -15,7 +15,7 @@
     <script type="text/javascript">
       $(function () {
         $('#join-form').submit(function () {
-          var user = $('#nick-input').val();
+          var user = {{ user.username }}
           if(user) {
             window.location = '{{ room_id|escapejs }}?user=' + user;
           }

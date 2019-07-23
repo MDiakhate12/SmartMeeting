@@ -30,7 +30,7 @@
 
     <div id="chat-input-area">
       <form id="send-form">
-        <input type="text" id="chat-input" autocomplete="off" placeholder="Say something" />
+        <input class="form-control form-control-lg" type="text" id="chat-input" autocomplete="off" placeholder="Say something" />
       </form>
     </div>
 
@@ -155,6 +155,7 @@
           $.post('/rooms/{{ room_id }}/messages/', { from: user, text: text }
           ).done(function (data) {
             $('#chat-input').val('');
+            console.log(data)
             console.log('send response: ' + JSON.stringify(data));
           }).fail(function () {
             alert('failed to send message');

@@ -1,0 +1,170 @@
+<!------ Include the above in your HEAD tag ---------->
+{% load static %}
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesgeet"
+        href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+    {% include 'main/links.html' %}
+</head>
+
+<body class="profile-page">
+
+    {% include 'main/profile_navbar.html' %}
+
+    <div class="page-header header-filter" data-parallax="true">
+    </div>
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile">
+                            <div class="avatar">
+                                <img src="{{ user_profile.profile.photo.url }}" alt="Circle Image"
+                                    class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <div class="name">
+                                <h3 class="title">{{ user_profile.first_name }} {{ user_profile.last_name }}</h3>
+                                <h4 class="title">@{{ user_profile.username }}</h4>
+                                <h6>{{ user_profile.profile.job }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="description text-center">
+                    <p>{{ user_profile.profile.description }}</p>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile-tabs">
+                            <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#documents" role="tab" data-toggle="tab">
+                                        <i class="material-icons">group</i> Groups
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#meetings" role="tab" data-toggle="tab">
+                                        <i class="material-icons">work</i> Meetings
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#stats" role="tab" data-toggle="tab">
+                                        <i class="material-icons">trending_up</i> Statitics
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="tab-content tab-space">
+                    <div class="tab-pane active text-center gallery" id="documents">
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">
+                            </div>
+                            <div class="col-md-3 mr-auto">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane text-center gallery" id="meetings">
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">
+                                <div class="card card-primary collapsed-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Expandable</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-widget="collapse"><i
+                                                    class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body" style="display: none;">
+                                        The body of the card
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <div class="col-md-3 mr-auto">
+                                <div class="card card-primary collapsed-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Expandable</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-widget="collapse"><i
+                                                    class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body" style="display: none;">
+                                        The body of the card
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane text-center gallery" id="stats">
+                        <div class="row">
+                            <div class="col-md-3 ml-auto">
+
+                            </div>
+
+                            <div class="col-md-3 mr-auto">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-center ">
+        <p>© 2019 SmartMeeting SENEGAL. All rights reserved | Design by MDMG</p>
+    </footer>
+
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+
+    {% include 'main/scripts.html' %}
+</body>

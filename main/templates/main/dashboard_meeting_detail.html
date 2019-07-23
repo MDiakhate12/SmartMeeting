@@ -1,0 +1,123 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="jumbotron row">
+    <figure class="col-md-4 flex-column">
+        <h3>Object : {{ meeting.obj }}</h3>
+        {% if meeting.done %}
+        <img src="{% static 'images/done.png' %}" class="animated bounceInUp" width="70" height="70 alt="">
+            <h4 class=" text-muted" style="position: relative; left: 10px">Done</h4>
+        {% elif meeting.doing %}
+        <img src="{% static 'images/on_process.png' %}" class="animated bounceInUp" width="70" height="70" alt="">
+        <h4 class="text-muted" style="position: relative; left: 10px">In work..</h4>
+        {% else %}
+        <img src="{% static 'images/not_done.png' %}" class="animated bounceInUp" width="70" height="70" alt="">
+        <h4 class="text-muted" style="position: relative; left: 10px">Not started yet</h4>
+        {% endif %}
+    </figure>
+    <figure class="col-sm-5">
+        <a href="{% url 'profile' meeting.chairperson.id %}">
+            <img src="{{ meeting.chairperson.profile.photo.url }}" alt="chairperson_person"
+                class="img-circle elevation-2 animated fadeInUp" width="100" height="100">
+            <figcaption>
+                {{ meeting.chairperson.first_name }} {{ meeting.chairperson.last_name }} <br>
+        </a>
+        Chairperson
+        </figcaption>
+
+
+    </figure>
+
+    <div class="col-md-3 col-sm-6 col-12 flex-column">
+        <div class="info-box bg-info animated fadeInRight">
+            <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Date Created: {{ meeting.date }}</span>
+                <span class="info-box-number">Begin : {{ meeting.begin }} - End : {{ meeting.end }}</span>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                </div>
+                <span class="progress-description">
+                    Meeting Schedule Details
+                </span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        {% if not meeting.done and not meeting.doing %}
+        <center><a href="{% url 'start_meeting' meeting.id %}" type="button" class="btn btn-success btn-lg">Start Meeting</a>
+        </center>
+        {% endif %}
+        <!-- /.info-box -->
+    </div>
+</div>
+
+
+<div class="list-group">
+    <h4 href="#" class="list-group-item list-group-item-action" style="background-color: #2ebdc4">
+        <center>Points of the meeting</center>
+    </h4>
+    {% for point in meeting.points %}
+    <strong href="#"
+        class="list-group-item list-group-item-action list-group-item-{% if forloop.counter|divisibleby:2 %}light{% else %}info{% endif %}">
+        {{ forloop.counter }}. {{ point }}
+    </strong>
+    {% endfor %}
+</div>
+<!-- background:linear-gradient(135deg, #2ebdc4 0%, #68e5b2 100%) -->
+<h4 class="mt-4" style="background-color: #2ebdc4">
+    <center>Members</center>
+</h4>
+<div class="row mt-0">
+    {% for member in meeting.members.all %}
+    <div class="col-md-3">
+        <!-- Widget: user widget style 2 -->
+        <div class="card card-widget widget-user-2 animated bounceInRight">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-info">
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="{{ member.profile.photo.url }}"
+                        alt="{{ member.username }}_photo">
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username"><a href="{% url 'profile' member.id %}">{{ member.first_name }}
+                        {{ member.last_name }}</a></h3>
+                <h3 class="widget-user-username"><a href="{% url 'profile' member.id %}">@{{ member.username }}</a>
+                </h3>
+                <h5 class="widget-user-desc">{{ member.profile.job }}</h5>
+            </div>
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            {{ member.profile.description }} <span class="float-right badge bg-primary">
+                                <</span> </a> </li> <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        {{ member.profile.phone }} <span class="float-right badge bg-info">
+                                            <</span> </a> </li> <li class="nav-item">
+                                                <a href="#" class="nav-link">
+                                                    {{ member.email }} <span class="float-right badge bg-success">
+                                                        <</span> </a> </li> </ul> </div> </div> <!-- /.widget-user -->
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row" style="font-size: 25px">
+            {% if meeting.previous_meeting %}
+            <div class="float-left">
+                <a href="{% url 'meeting' meeting.previous_meeting.id %}"><i
+                        class="fas fa-arrow-circle-left"></i>{{ meeting.previous_meeting }}</a>
+            </div>
+            {% endif %}
+            {% if meeting.next_meeting %}
+            <div style="position: absolute; right:20px;">
+                <a href="{% url 'meeting' meeting.next_meeting.id %}">{{ meeting.next_meeting }}<i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% endblock %}

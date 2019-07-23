@@ -1,0 +1,147 @@
+{% comment %}
+<form method="POST" name="meeting_form" class="form-horizontal">
+    {% csrf_token %}
+    <div class="modal-body card-body">
+        <!-- /.card-header -->
+        <!-- form start -->
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" name="title" class="form-control" id="object" placeholder="Title of the meeting">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <input type="text" name="object" class="form-control" id="object" placeholder="Object of the meeting">
+            </div>
+        </div>
+
+        <div class="form-group container">
+            <dvi class="row">
+                <div class="col-sm-12">
+                    <label>Select your contacts or invite new by clicking <button
+                            class="badge badge-info">here</button></label>
+                    <select class="select2 select2-hidden-accessible emails" name="emails[]" multiple="true"
+                        data-placeholder="Invite your Contacts via emails" style="width: 100%;" data-select2-id="7"
+                        tabindex="-1" aria-hidden="true">
+                        {% for user in users %}
+                        <option>{{ user.email }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="dropdown-wrapper" aria-multiselectable="true" aria-hidden="true"></span>
+                </div>
+
+            </dvi>
+
+        </div>
+
+        <div class="form-group container">
+            <div class="row">
+                <div class='col-sm-6'>
+                    <label for="begin">Begining hour :</label>
+                    <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                        <input name="begin" type="text" class="form-control datetimepicker-input"
+                            data-target="#datetimepicker7" />
+                        <span class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                        </span>
+                    </div>
+                </div>
+                <div class='col-sm-6'>
+                    <label for="end">End hour :</label>
+                    <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                        <input name="end" type="text" class="form-control datetimepicker-input"
+                            data-target="#datetimepicker8" />
+                        <span class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Main points of the meeting</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- the events -->
+                        <div name="event" id="external-events">
+
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Add points</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                            <ul class="fc-color-picker" id="color-chooser">
+                                <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a>
+                                </li>
+                                <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a>
+                                </li>
+                                <li><a class="text-success" href="#"><i class="fas fa-square"></i></a>
+                                </li>
+                                <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a>
+                                </li>
+                                <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /btn-group -->
+                        <div class="input-group">
+                            <input id="new-event" name="events" type="text" class="form-control"
+                                placeholder="Event Title">
+
+                            <div class="input-group-append">
+                                <button id="add-new-event" type="submit" class="btn btn-primary btn-flat">Add</button>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                        <!-- /input-group -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group container">
+            <div class="row">
+                <div class="col-3">
+                    <label>Previous meeting</label>
+                    <select name="previous" class="select2 select2-hidden-accessible" multiple="false"
+                        data-placeholder="Previous meeting" style="width: 100%;" data-select2-id="6" tabindex="-1"
+                        aria-hidden="true">
+                        {% for meeting in meetings %}
+                        <option>{{ meeting.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="dropdown-wrapper" aria-hidden="true"></span>
+                </div>
+
+                <div class="col-3">
+                    <label>Next meeting</label>
+                    <select name="next" class="select2 select2-hidden-accessible" multiple="false"
+                        data-placeholder="Next meeting" style="width: 100%;" data-select2-id="5" tabindex="-1"
+                        aria-hidden="true">
+                        {% for meeting in meetings %}
+                        <option>{{ meeting.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="dropdown-wrapper" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer justify-content-between card-footer">
+        <button type="submit" class="btn btn-default float-left" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-info float-right">Create meeting</button>
+    </div>
+</form>
+{% endcomment %}

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'main',
     'django.contrib.sites',
     'invitations',
-    'easy_select2'
+    'easy_select2',
+    'notifications',
 ]
 
 SITE_ID = 1

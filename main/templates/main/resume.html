@@ -1,0 +1,183 @@
+<article>
+
+    <div class="exemple_lct">
+        <h2>Formulaire</h2>
+    </div>
+    <div class="contenu-lct">
+        <div class="btn-telechargement-content_haut btn-telechargement-container">
+            <span data-download-id="245850" oo-trk="downloadable-content-bouton-lettre">
+                <a class="bt_rouge bt_fort icon icon-telecharger kDownloadDoc">
+                </a>
+            </span>
+        </div>
+
+
+        <div class="content-block-lct">
+            <h3>-</h3>
+            <!-- <p><span class="txt_modifiable"></span></p> -->
+            <!-- <p><span class="txt_modifiable"></span></p> -->
+
+            <p>Le <span class="txt_modifiable">{{ meeting.date }}</span>, à <span class="txt_modifiable">[heure]</span> <span
+                    class="txt_modifiable">{{ meeting.chairperson }}</span> a réuni les
+                personnes suivantes :</p>
+            <ul>
+                {% for member in meeting.members %}
+                <li>
+                    <p><span class="txt_modifiable">{{ member.first_name }} {{ member.last_name }} </span></p>
+                </li>
+                {% endfor %}
+            </ul>
+            <p>Il a été
+                procédé à l'examen des questions suivantes :</p>
+            <ul>
+                <li>
+                    <p><span class="txt_modifiable">[1re
+                            question examinée]</span></p>
+                </li>
+                <li>
+                    <p><span class="txt_modifiable">[2e
+                            question examinée]</span></p>
+                </li>
+                <li>
+                    <p><span class="txt_modifiable">[3e
+                            question examinée]</span></p>
+                </li>
+                <li>
+                    <p><span class="txt_modifiable">[4e
+                            question examinée]</span></p>
+                </li>
+            </ul>
+            <p>Les participants
+                ont émis les avis suivants :</p>
+            <p>Au sujet de la
+                première question, à savoir <span class="txt_modifiable">[rappelez le
+                    sujet de la première question]</span> :</p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 1er participant au sujet de la première question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 2e participant au sujet de la première question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 3e participant au sujet de la première question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 4e participant au sujet de la première question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 5e participant au sujet de la première question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 6e participant au sujet de la première question]</span></p>
+
+            <p>Au sujet de la 2e
+                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 2e
+                    question]</span> :</p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 1er participant au sujet de la 2e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 2e participant au sujet de la 2e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 3e participant au sujet de la 2e question]</span></p>
+            <p><span class="txt_modifiable">[etc.]</span></p>
+
+            <p>Au sujet de la 3e
+                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 3e
+                    question]</span> :</p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 1er participant au sujet de la 3e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 2e participant au sujet de la 3e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 3e participant au sujet de la 3e question]</span></p>
+            <p><span class="txt_modifiable">[etc.]</span></p>
+
+            <p>Au sujet de la 4e
+                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 4e
+                    question]</span> :</p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 1er participant au sujet de la 4e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 2e participant au sujet de la 4e question]</span></p>
+            <p><span class="txt_modifiable">[avis
+                    exprimé par le 3e participant au sujet de la 4e question]</span></p>
+            <p><span class="txt_modifiable">[etc.]</span></p>
+
+            <p>Après
+                discussion, il a été décidé de :</p>
+            <p><span class="txt_modifiable">[décision
+                    prise après examen de la 1ere question]</span></p>
+            <p><span class="txt_modifiable">[décision
+                    prise après examen de la 2e question]</span></p>
+            <p><span class="txt_modifiable">[décision
+                    prise après examen de la 3e question]</span></p>
+            <p><span class="txt_modifiable">[décision
+                    prise après examen de la 4e question]</span></p>
+
+            <p>Pour la bonne
+                exécution des décisions prises, il est demandé en premier lie à :</p>
+            <p><span class="txt_modifiable">[Nom
+                    de la personne chargée d'exécuter la décision prise après étude
+                    de la première question]</span> de <span class="txt_modifiable">[tâches
+                    qu'elle devra exécuter]</span>.</p>
+            <p>En outre, <span class="txt_modifiable">[nom
+                    de la personne chargée d'exécuter la décision prise après étude
+                    de la 2e question]</span> est chargé de <span class="txt_modifiable">[tâches
+                    qu'elle devra exécuter]</span>.</p>
+            <p>En ce qui
+                concerne <span class="txt_modifiable">[décision prise après examen de la
+                    3e question]</span>, <span class="txt_modifiable">[nom de la personne
+                    chargée d'exécuter cette décision]</span> devra <span class="txt_modifiable">[tâches
+                    qu'elle devra exécuter]</span>.</p>
+            <p>Enfin, <span class="txt_modifiable">[nom
+                    de la personne chargée d'exécuter la décision prise après étude
+                    de la 4e question]</span> devra <span class="txt_modifiable">[tâches
+                    qu'elle devra exécuter]</span>.</p>
+
+            <p>Ces missions
+                devront être terminées pour le <span class="txt_modifiable">[date à
+                    laquelle les tâches devront être terminées]</span>.</p>
+            <p><span class="txt_modifiable">[Nom
+                    de la personne qui a organisé la réunion]</span> remercie d'avance
+                les personnes auxquelles ces tâches sont confiées.</p>
+
+            <p>Une prochaine
+                réunion aura lieu le <span class="txt_modifiable">[date et heure de la
+                    prochaine réunion]</span>.</p>
+
+            <table>
+                <tr>
+                    <td>
+                        <p><span class="txt_modifiable">[Nom de la
+                                personne qui a organisé la réunion]</span>
+                        </p>
+                        <p><span class="txt_modifiable">[Signature]</span></p>
+                    </td>
+                    <td>
+                        <p><span class="txt_modifiable">[Nom d'un
+                                participant]</span></p>
+                        <p><span class="txt_modifiable">[Signature]</span></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="form-group">
+            <label>Multiple</label>
+            <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State"
+                style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
+                <option data-select2-id="14">Alabama</option>
+                <option data-select2-id="15">Alaska</option>
+            </select>
+            <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr"
+                data-select2-id="8" style="width: 100%;">
+                <span class="selection">
+                    <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true"
+                        aria-expanded="false" tabindex="-1">
+                        <ul class="select2-selection__rendered">
+                            <li class="select2-search select2-search--inline">
+                                <input class="select2-search__field" type="search" tabindex="0" autocomplete="off"
+                                    autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox"
+                                    aria-autocomplete="list" placeholder="Select a State" style="width: 749px;"></li>
+                        </ul>
+                    </span>
+                </span>
+                <span class="dropdown-wrapper" aria-hidden="true"></span>
+            </span>
+        </div>

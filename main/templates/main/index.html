@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home | SmartMeeting</title>
+    <meta name="description" content="Perspective Page View Navigation: Transforms the page in 3D to reveal a menu" />
+    <meta name="keywords"
+        content="3d page, menu, navigation, mobile, perspective, css transform, web development, web design" />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="{% static '../favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/component.css' %}" />
+
+
+    <!-- csstransforms3d-shiv-cssclasses-prefixed-teststyles-testprop-testallprops-prefixes-domprefixes-load -->
+    <script src="{% static 'js/modernizr.custom.25376.js' %}"></script>
+</head>
+
+<body>
+    <div id="perspective" class="perspective effect-movedown">
+        <div class="container">
+            <div class="wrapper">
+                <!-- wrapper needed for scroll -->
+                <!-- Top Navigation -->
+                
+                <header class="codrops-header">
+                    <h1><strong>SmartMeeting</strong><span>Meet in another way</span></h1>
+
+                </header>
+                <div class="main clearfix">
+                    <div class="column">
+
+                        <!-- SLIDE SHOW -->
+                        {% include 'main/carousel.html' %}
+
+                        <!--------------------------------------------------------------------------- -->
+                        <p><button id="showMenu">{% if not user.is_authenticated %}Join us
+                                now{% else %}Menu{% endif %}</button></p>
+                    </div>
+                    <div class="column">
+                        <img src="{% static 'images/logo.jpg' %}" alt="" srcset="">
+                        {% if user.is_authenticated %}{% endif %}
+                    </div>
+
+                </div>
+
+                <footer class="related main-footer">
+                    <strong>Copyright &copy; 2019 <a href="#">SmartMeeting SENEGAL</a>. All rights reserved | Design by
+                        MDMG.
+                        <div class="float-right d-none d-sm-inline-block">
+                            <b>Version</b> 1.0.0-beta.1
+                        </div>
+                </footer>
+            </div>
+            <!-- /main -->
+        </div>
+        <!-- wrapper -->
+    </div>
+    <!-- /container -->
+    <nav class="outer-nav top horizontal">
+        <a href="{% url 'index' %}" class="icon-home">Home</a>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="icon-mail">login</a>
+        <a href="{% url 'register' %}" class="icon-lock">Sign up</a> {% else %}
+        <a href="{% url 'dashboard' %}" class="icon-upload">Dashboard</a>
+        <a href="{% url 'profile' user.id %}" class="icon-star">Profile</a>
+        <a href="{% url 'logout' %}" class="icon-exit">Logout</a>
+        {% endif %}
+        <!-- <a href="#" class="icon-upload"></a>
+			<a href="#" class="icon-star">Favorites</a>
+			<a href="#" class="icon-mail">Messages</a>
+			<a href="#" class="icon-lock">Security</a> -->
+    </nav>
+    </div>
+    <!-- /perspective -->
+    <script src="{% static 'js/classie.js' %}"></script>
+    <script src="{% static 'js/menu.js' %}"></script>
+</body>
+
+</html>

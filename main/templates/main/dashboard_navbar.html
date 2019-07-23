@@ -1,0 +1,52 @@
+{% load static %}
+{% load notifications_tags %}
+
+<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+{% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' refresh_period='3' %}
+
+<nav class="main-header navbar navbar-expand navbar-info navbar-dark border-bottom" style="background-color: #2ebdc4">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{% url 'index' %}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+        </li>
+
+        <li class="nav-item dropdown ml-auto">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-bell"></i>
+                <span class="badge badge-warning navbar-badge">{% live_notify_badge %}</span>
+            </a>
+
+
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
+
+                <span class="dropdown-item dropdown-header"><i
+                        class="fas fa-users mr-2"></i><strong>{% live_notify_badge %}</strong> unread
+                    notifications.</span>
+                <div class="dropdown-divider"></div>
+
+                <div class="dropdown-item">
+                    {% live_notify_list %}
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</nav>
