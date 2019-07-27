@@ -2,9 +2,13 @@ from string import punctuation
 import spacy
 from spacy.lang.fr.stop_words import STOP_WORDS
 
+from nltk.corpus import stopwords
+
+stopwords = set(stopwords.words('french') + list(punctuation))
+
 nlp = spacy.load("fr_core_news_md")
 
-stopwords = list(STOP_WORDS) + list(punctuation)
+# stopwords = list(STOP_WORDS) + list(punctuation)
 
 def tokenize(text):
     doc = nlp(text)
@@ -28,3 +32,4 @@ def appartenir(topics, message):
     i = score.index(max(score))
 
     return topics[i]
+

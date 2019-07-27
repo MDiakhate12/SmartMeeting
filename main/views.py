@@ -205,3 +205,12 @@ def join_all(request, id):
 def resume(request, id):
     meeting = Meeting.objects.get(pk=id)
     return render(request, 'main/resume.html', {'meeting': meeting})
+
+def pv(request, id):
+    meeting = Meeting.objects.get(pk=id)
+    return render(request, 'main/pv.html', {'meeting': meeting})
+
+
+def stats(request, id):
+    meeting = Meeting.objects.get(pk=id)
+    return render(request, 'main/stats.html', {'meeting': meeting})

@@ -22,10 +22,6 @@
 <div id="chat-elements">
   <div id="chat-log">
     {% for msg in messages %}
-    <a href="/main/profile/1" class="nav-link">
-      <img width="50" height="50" class="img-circle" src="{{ msg.user.profile.photo.url }}" alt="{{ msg.user.profile }}"
-        style="position: relative; top: -13px">
-    </a>
     <b>{{ msg.from }}</b>: {{ msg.text }}<br />
     {% endfor %}
     <a name="bottom"></a>

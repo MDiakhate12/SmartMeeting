@@ -1,0 +1,36 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% load static %}
+{% block content %}
+
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            Most Common Words
+        </h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
+            <canvas class="flot-base" width="731" height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 731px; height: 300px;"></canvas><canvas
+                class="flot-overlay" width="731" height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 731px; height: 300px;"></canvas>
+            <div class="flot-svg">
+
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body-->
+</div>
+
+{% endblock %}

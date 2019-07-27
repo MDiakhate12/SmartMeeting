@@ -17,7 +17,7 @@
         <h4 class="text-muted" style="position: relative; left: 10px">Not started yet</h4>
         {% endif %}
     </figure>
-    <figure class="col-sm-5">
+    <figure class="col-sm-4">
         <a href="{% url 'profile' meeting.chairperson.id %}">
             <img src="{{ meeting.chairperson.profile.photo.url }}" alt="chairperson_person"
                 class="img-circle elevation-2 animated fadeInUp" width="100" height="100">
@@ -28,7 +28,7 @@
         </figcaption>
     </figure>
 
-    <div class="col-md-3 col-sm-6 col-12 flex-column">
+    <div class="col-md-4 col-sm-6 col-12 flex-column">
         <div class="info-box bg-info animated fadeInRight">
             <span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
 
@@ -57,8 +57,16 @@
 
         {% if meeting.done %}
         <center>
-            <a href="{% url 'messages' meeting.id %}" type="button" class="btn btn-dark">Go to Messages</a>
-            <a href="{% url 'resume' meeting.id %}" type="button" class="btn btn-messageuse">Go to resume</a>
+            <a href="{% url 'messages' meeting.id %}" type="button"
+                class="animated bounceInRight btn btn-info btn-app"><i class="fas fa-envelope"></i>Messages</a>
+            <a href="{% url 'resume' meeting.id %}" type="button"
+                class="animated bounceInRight btn btn-success btn-app"><i class="fas fa-align-justify"></i>
+                Resume</a>
+            <a href="{% url 'pv' meeting.id %}" type="button" class="animated bounceInRight btn btn-primary btn-app"><i
+                    class="fas fa-file"></i>PV</a>
+            <a href="{% url 'stats' meeting.id %}" type="button"
+                class="animated bounceInRight btn btn-primary btn-app"><i class="fas fa-chart-line"></i>
+                Stats</a>
         </center>
         {% endif %}
         <!-- /.info-box -->

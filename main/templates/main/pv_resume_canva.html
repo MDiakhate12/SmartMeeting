@@ -1,0 +1,58 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% load static %}
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+<style>
+    .content {
+        font-family: 'Courgette', cursive;
+    }
+</style>
+
+<div class="row">
+    <div class="col-2"></div>
+
+    <div id="body" class="col-8 mb-5"
+        style="border: 2px solid black; border-radius: 10px; padding: 30px; box-shadow: 0px 0px 50px 5px gray; font-size: 25px">
+        {% block body %} {% endblock %}
+    </div>
+
+    <div class="col-2 d-flex align-items-center flex-column">
+        <a onclick="javascript:dowload()" class="btn btn-app download">
+            <i class="fas fa-file-download"></i> Dowload
+        </a>
+        <a class="btn btn-app">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a class="btn btn-app">
+            <i class="fas fa-share-alt"></i> Share
+        </a>
+
+    </div>
+</div>
+
+
+<button onclick="javascript:dowload()" class="btn btn-success btn-block btn-lg offset-3 col-6 mb-3">Download as
+    PDF</button>
+
+
+<script>
+    function download() {
+        // html2canvas(document.querySelector('#body'), {
+        //     onrendered: function (canvas) {
+
+        //         const img = canvas.toDataURL('image/png')
+        //         var doc = new jsPDF('p', 'px', [1048, 2267]); // A4 size page of PDF
+        //         doc.addImage(img, 'PNG')
+        //         doc.save("resume.pdf");
+        //     }
+        // })
+
+        var doc = new jsPDF('p', 'px', [1390, 2100]); // A4 size page of PDF
+        doc.fromHTML(document.querySelector('#body'), 20, 20);
+        doc.save("resume.pdf");
+    }
+</script>
+
+{% endblock %}

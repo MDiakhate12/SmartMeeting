@@ -1,152 +1,96 @@
-{% extends 'main/dashboard_base.html' %}
+{% extends 'main/pv_resume_canva.html' %}
 
-{% load static %}
-{% block content %}
+{% block body %}
+<h2>Compte rendu de la {{ meeting.title }}</h2>
+<hr>
+<div class="content-block-lct">
+    <h3></h3>
+    <!-- <p><span class="txt_modifiable"></span></p> -->
+    <!-- <p><span class="txt_modifiable"></span></p> -->
 
-<link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
-<style>
-    .content {
-        font-family: 'Courgette', cursive;
-    }
-</style>
+    <p>Le <span class="date">{{ meeting.date }}</span>, à <span class="date">{{ meeting.begin }}</span>
+        <span class="chairperson">{{ meeting.chairperson.first_name }}
+            {{ meeting.chairperson.last_name }}</span> a réuni les personnes suivantes :</p>
+    <ul>
+        {% for member in meeting.members.all %}
+        <li>
+            <p><span class="txt_modifiable">{{ member.first_name }} {{ member.last_name }} </span></p>
+        </li>
+        {% endfor %}
+    </ul>
+    <p>Il a été procédé à l'examen des questions suivantes :</p>
+    <ul>
+        {% for point in meeting.points %}
+        <li>
+            <p><span class="point">{{ point }} </span></p>
+        </li>
+        {% endfor %}
+    </ul>
 
-<div class="row">
-    <div class="col-2"></div>
-    <div id="body" class="col-8 mb-5"
-        style="border: 2px solid black; border-radius: 10px; padding: 30px; box-shadow: 0px 0px 50px 5px gray; font-size: 25px">
-        <h2>Compte rendu de la {{ meeting.title }}</h2>
-        <hr>
+    <p>Les participants ont émis les avis suivants :</p>
+    {% for point in meeting.points %}
+    <p>
+        Au sujet de la question numéro {{forloop.counter}}, à savoir
+        <span class="point">"{{ point }}"</span> :
+    </p>
+    {% for point in meeting.points%}
+    <p>
+        <span class="message">[avis exprimé par le participant numéro {{ forloop.counter }} au sujet de la
+            question {{ forloop.counter }}]</span>
+    </p>
+    {% endfor %}
+    {% endfor %}
 
-        <div class="content-block-lct">
-            <h3></h3>
-            <!-- <p><span class="txt_modifiable"></span></p> -->
-            <!-- <p><span class="txt_modifiable"></span></p> -->
+    {% for decision in meeting.decisions %}
 
-            <p>Le <span class="date">{{ meeting.date }}</span>, à <span class="date">{{ meeting.begin }}</span>
-                <span class="chairperson">{{ meeting.chairperson.first_name }}
-                    {{ meeting.chairperson.last_name }}</span> a réuni les personnes suivantes :</p>
-            <ul>
-                {% for member in meeting.members.all %}
-                <li>
-                    <p><span class="txt_modifiable">{{ member.first_name }} {{ member.last_name }} </span></p>
-                </li>
-                {% endfor %}
-            </ul>
-            <p>Il a été procédé à l'examen des questions suivantes :</p>
-            <ul>
-                {% for point in meeting.points %}
-                <li>
-                    <p><span class="point">{{ point }} </span></p>
-                </li>
-                {% endfor %}
-            </ul>
+    <p>Après discussion, il a été décidé de :</p>
+    <p>
+        <span class="decision">[décision prise après examen de la question numéro {{ forloop.counter }}]</span>
+    </p>
 
-            <p>Les participants ont émis les avis suivants :</p>
-            {% for point in meeting.points %}
-            <p> 
-                Au sujet de la question numéro {{forloop.counter}}, à savoir 
-                <span class="point">"{{ point }}"</span> : 
+    {% endfor %}
+    <p>Pour la bonne exécution des décisions prises, il est demandé en premier lie à :</p>
+    <p><span class="txt_modifiable">[Nom
+            de la personne chargée d'exécuter la décision prise après étude
+            de la première question]</span> de <span class="txt_modifiable">[tâches
+            qu'elle devra exécuter]</span>.</p>
+    <p>En outre, <span class="txt_modifiable">[nom de la personne chargée d'exécuter la décision prise après
+            étude de la 2e question]</span> est chargé de <span class="txt_modifiable">[tâches qu'elle devra
+            exécuter]</span>.</p>
+    <p>En ce qui
+        concerne <span class="txt_modifiable">[décision prise après examen de la
+            3e question]</span>, <span class="txt_modifiable">[nom de la personne
+            chargée d'exécuter cette décision]</span> devra <span class="txt_modifiable">[tâches
+            qu'elle devra exécuter]</span>.</p>
+    <p>Enfin, <span class="txt_modifiable">[nom
+            de la personne chargée d'exécuter la décision prise après étude
+            de la 4e question]</span> devra <span class="txt_modifiable">[tâches
+            qu'elle devra exécuter]</span>.</p>
+
+    <p>Ces missions
+        devront être terminées pour le <span class="txt_modifiable">[date à
+            laquelle les tâches devront être terminées]</span>.</p>
+    <p><span class="txt_modifiable">[Nom
+            de la personne qui a organisé la réunion]</span> remercie d'avance
+        les personnes auxquelles ces tâches sont confiées.</p>
+
+    <p>Une prochaine
+        réunion aura lieu le <span class="txt_modifiable">[date et heure de la
+            prochaine réunion]</span>.</p>
+
+    <div>
+        <div>
+            <p><span class="chairperson">{{ meeting.chairperson.first_name }}
+                    {{ meeting.chairperson.last_name }}</span>
             </p>
-                {% for point in meeting.points%}
-                <p>
-                    <span class="message">[avis exprimé par le participant numéro {{ forloop.counter }} au sujet de la question {{ forloop.counter }}]</span>
-                </p>
-                {% endfor %}
-            {% endfor %}
-
-            {% for decision in meeting.decisions %}
-
-            <p>Après discussion, il a été décidé de :</p>
-            <p>
-                <span class="decision">[décision prise après examen de la question numéro {{ forloop.counter }}]</span>
-            </p>
-
-            {% endfor %}
-            <p>Pour la bonne exécution des décisions prises, il est demandé en premier lie à :</p>
-            <p><span class="txt_modifiable">[Nom
-                    de la personne chargée d'exécuter la décision prise après étude
-                    de la première question]</span> de <span class="txt_modifiable">[tâches
-                    qu'elle devra exécuter]</span>.</p>
-            <p>En outre, <span class="txt_modifiable">[nom de la personne chargée d'exécuter la décision prise après
-                    étude de la 2e question]</span> est chargé de <span class="txt_modifiable">[tâches qu'elle devra
-                    exécuter]</span>.</p>
-            <p>En ce qui
-                concerne <span class="txt_modifiable">[décision prise après examen de la
-                    3e question]</span>, <span class="txt_modifiable">[nom de la personne
-                    chargée d'exécuter cette décision]</span> devra <span class="txt_modifiable">[tâches
-                    qu'elle devra exécuter]</span>.</p>
-            <p>Enfin, <span class="txt_modifiable">[nom
-                    de la personne chargée d'exécuter la décision prise après étude
-                    de la 4e question]</span> devra <span class="txt_modifiable">[tâches
-                    qu'elle devra exécuter]</span>.</p>
-
-            <p>Ces missions
-                devront être terminées pour le <span class="txt_modifiable">[date à
-                    laquelle les tâches devront être terminées]</span>.</p>
-            <p><span class="txt_modifiable">[Nom
-                    de la personne qui a organisé la réunion]</span> remercie d'avance
-                les personnes auxquelles ces tâches sont confiées.</p>
-
-            <p>Une prochaine
-                réunion aura lieu le <span class="txt_modifiable">[date et heure de la
-                    prochaine réunion]</span>.</p>
-
-            <div>
-                <div>
-                    <p><span class="chairperson">{{ meeting.chairperson.first_name }}
-                            {{ meeting.chairperson.last_name }}</span>
-                    </p>
-                    <p><span class="txt_modifiable">[Signature]</span></p>
-                </div>
-                <div>
-                    <p><span class="txt_modifiable">[Nom d'un
-                            participant]</span></p>
-                    <p><span class="txt_modifiable">[Signature]</span></p>
-                </div>
-            </div>
+            <p><span class="txt_modifiable">[Signature]</span></p>
         </div>
-
-    </div>
-    <div class="col-2 d-flex align-items-center flex-column">
-        <a class="btn btn-app">
-            <i class="fas fa-file-download"></i> Dowload
-        </a>
-        <a class="btn btn-app">
-            <i class="fas fa-edit"></i> Edit
-        </a>
-        <a class="btn btn-app">
-            <i class="fas fa-share-alt"></i> Share
-        </a>
-
+        <div>
+            <p><span class="txt_modifiable">[Nom d'un
+                    participant]</span></p>
+            <p><span class="txt_modifiable">[Signature]</span></p>
+        </div>
     </div>
 </div>
-
-
-
-<button id="download" class="btn btn-success btn-block btn-lg offset-3 col-6 mb-3">Download as PDF</button>
-
-<script>
-    document.querySelector('#download').addEventListener('click',
-        () => {
-            // html2canvas(document.querySelector('#body'), {
-            //     onrendered: function (canvas) {
-
-            //         const img = canvas.toDataURL('image/png')
-            //         var doc = new jsPDF('p', 'px', [1048, 2267]); // A4 size page of PDF
-            //         doc.addImage(img, 'PNG')
-            //         doc.save("resume.pdf");
-            //     }
-            // })
-
-            var doc = new jsPDF('p', 'px', [1500, 2267]); // A4 size page of PDF
-            doc.fromHTML(document.querySelector('#body'), 20, 20);
-            doc.save("resume.pdf");
-        }
-
-
-    )
-
-
-</script>
 
 {% endblock %}
