@@ -1,179 +1,184 @@
 {% extends 'main/dashboard_base.html' %}
 
 {% load static %}
-  {% block header  %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Chat</title>
-    <meta name="description" content="Chat">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+{% block header  %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Chat</title>
+<meta name="description" content="Chat">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/normalize.min.css' %}"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/main.css' %}"> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/normalize.min.css' %}"> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'chat/main.css' %}"> -->
 
-    <script src="{% static 'django_eventstream/json2.js' %}"></script>
-    <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
-    <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
-    <script src="{% static 'chat/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'django_eventstream/json2.js' %}"></script>
+<script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
+<script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
+<script src="{% static 'chat/jquery-3.2.1.min.js' %}"></script>
 
-  {% endblock %}
+{% endblock %}
 
-  {% block content %}
-    <div id="chat-elements">
-      <div id="chat-log">
-        {% for msg in messages %}
-          <b>{{ msg.from }}</b>: {{ msg.text }}<br />
-        {% endfor %}
-        <a name="bottom"></a>
-      </div>
-    </div>
+{% block content %}
+<div id="chat-elements">
+  <div id="chat-log">
+    {% for msg in messages %}
+    <a href="/main/profile/1" class="nav-link">
+      <img width="50" height="50" class="img-circle" src="{{ msg.user.profile.photo.url }}" alt="{{ msg.user.profile }}"
+        style="position: relative; top: -13px">
+    </a>
+    <b>{{ msg.from }}</b>: {{ msg.text }}<br />
+    {% endfor %}
+    <a name="bottom"></a>
+  </div>
+</div>
 
-    <div id="chat-input-area">
-      <form id="send-form">
-        <input class="form-control form-control-lg" type="text" id="chat-input" autocomplete="off" placeholder="Say something" />
-      </form>
-    </div>
+<div id="chat-input-area">
+  <form id="send-form">
+    <input class="form-control form-control-lg" type="text" id="chat-input" autocomplete="off"
+      placeholder="Say something" />
+  </form>
+</div>
 
-    {% endblock %}
-  {% block script %}
-  <script type="text/javascript">
-    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-      let finalTranscript = '';
-      let recognition = new window.SpeechRecognition();
-      recognition.lang = "fr-FR"
-      recognition.interimResults = true;
-      recognition.maxAlternatives = 10;
-      recognition.continuous = true;
-      recognition.onresult = (event) => {
-        let interimTranscript = '';
-        for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
-          let transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript;
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-        document.querySelector('#chat-input').value = finalTranscript + interimTranscript ;
-
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+  let finalTranscript = '';
+  let recognition = new window.SpeechRecognition();
+  recognition.lang = "fr-FR"
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 10;
+  recognition.continuous = true;
+  recognition.onresult = (event) => {
+    let interimTranscript = '';
+    for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+      let transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript;
+      } else {
+        interimTranscript += transcript;
       }
-      recognition.start();
+    }
+    document.querySelector('#chat-input').value = finalTranscript + interimTranscript;
 
-      var msg_ids = [{% for msg in messages %}{% if not forloop.first %},{% endif %}{{ msg.id }}{% endfor %}];
+  }
+  recognition.start();
 
-      var escapeHtml = function (s) {
-        var tagsToReplace = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;'
-        };
-        return s.replace(/[&<>]/g, function(tag) {
-          return tagsToReplace[tag] || tag;
-        });
-      };
+  var msg_ids = [{% for msg in messages %}{% if not forloop.first %}, {% endif %} { { msg.id } } {% endfor %}];
 
-      var scrollToBottom = function (e) {
-        e.scrollTop(e.height());
-        $('html, body').scrollTop($('#chat-elements').height());
-      };
+  var escapeHtml = function (s) {
+    var tagsToReplace = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;'
+    };
+    return s.replace(/[&<>]/g, function (tag) {
+      return tagsToReplace[tag] || tag;
+    });
+  };
 
-      var tryScrollToBottom = function (e, threshold) {
-        var el = e.get(0);
-        if(el.scrollTop + el.clientHeight + threshold > el.scrollHeight) {
-          scrollToBottom(e);
-        }
-      };
+  var scrollToBottom = function (e) {
+    e.scrollTop(e.height());
+    $('html, body').scrollTop($('#chat-elements').height());
+  };
 
-      var appendLog = function (s) {
-        var log = $('#chat-log');
-        log.append(s + '<br>');
-        tryScrollToBottom($('#chat-elements'), 50);
-      };
+  var tryScrollToBottom = function (e, threshold) {
+    var el = e.get(0);
+    if (el.scrollTop + el.clientHeight + threshold > el.scrollHeight) {
+      scrollToBottom(e);
+    }
+  };
 
-      var startChat = function (user) {
-        console.log('user=[' + user + ']');
+  var appendLog = function (s) {
+    var log = $('#chat-log');
+    log.append(s + '<br>');
+    tryScrollToBottom($('#chat-elements'), 50);
+  };
 
-        // smooth scroll should be off when this first scroll is called
-        scrollToBottom($('#chat-elements'));
-        $('html, body').scrollTop($('#chat-elements').height());
+  var startChat = function (user) {
+    console.log('user=[' + user + ']');
 
-        // now we can turn it on
-        $('#chat-elements').css('scroll-behavior', 'smooth');
+    // smooth scroll should be off when this first scroll is called
+    scrollToBottom($('#chat-elements'));
+    $('html, body').scrollTop($('#chat-elements').height());
 
-        var uri = '/rooms/' + encodeURIComponent('{{ room_id }}') + '/events/';
-        var es = new ReconnectingEventSource(uri, {
-          lastEventId: '{{ last_id }}'
-        });
+    // now we can turn it on
+    $('#chat-elements').css('scroll-behavior', 'smooth');
 
-        var firstConnect = true;
+    var uri = '/rooms/' + encodeURIComponent('{{ room_id }}') + '/events/';
+    var es = new ReconnectingEventSource(uri, {
+      lastEventId: '{{ last_id }}'
+    });
 
-        es.onopen = function () {
-          if(!firstConnect) {
-            appendLog('*** connected');
-          }
-          firstConnect = false;
-        };
+    var firstConnect = true;
 
-        es.onerror = function () {
-          appendLog('*** connection lost, reconnecting...');
-        };
+    es.onopen = function () {
+      if (!firstConnect) {
+        appendLog('*** connected');
+      }
+      firstConnect = false;
+    };
 
-        es.addEventListener('stream-reset', function () {
-          appendLog('*** client too far behind, please refresh');
-        }, false);
+    es.onerror = function () {
+      appendLog('*** connection lost, reconnecting...');
+    };
 
-        es.addEventListener('stream-error', function (e) {
-          // hard stop
-          es.close();
-          e = JSON.parse(e.data);
-          appendLog('*** stream error: ' + e.condition + ': ' + e.text);
-        }, false);
+    es.addEventListener('stream-reset', function () {
+      appendLog('*** client too far behind, please refresh');
+    }, false);
 
-        es.addEventListener('message', function (e) {
-          console.log('event: ' + e.data);
-          msg = JSON.parse(e.data);
+    es.addEventListener('stream-error', function (e) {
+      // hard stop
+      es.close();
+      e = JSON.parse(e.data);
+      appendLog('*** stream error: ' + e.condition + ': ' + e.text);
+    }, false);
 
-          // if an event arrives that was already in the initial pageload,
-          //   ignore it
-          if($.inArray(msg.id, msg_ids) != -1) {
-            return;
-          }
+    es.addEventListener('message', function (e) {
+      console.log('event: ' + e.data);
+      msg = JSON.parse(e.data);
 
-          appendLog('<b>' + escapeHtml(msg.from) + '</b>: ' + escapeHtml(msg.text));
-        }, false);
+      // if an event arrives that was already in the initial pageload,
+      //   ignore it
+      if ($.inArray(msg.id, msg_ids) != -1) {
+        return;
+      }
 
-        window.setInterval(envoie, 10000);
+      appendLog('<b>' + escapeHtml(msg.from) + '</b>: ' + escapeHtml(msg.text));
+    }, false);
 
-        function envoie () {
+    window.setInterval(envoie, 10000);
 
-          var text = $('#chat-input').val();
-          if(text.length == 0) { return false }
+    function envoie() {
 
-          $('#chat-input').attr('disabled', 'true');
-          $('#chat-send-button').attr('disabled', 'true');
-          $('#chat-send-button').text('Sending...');
-          $.post('/rooms/{{ room_id }}/messages/', { from: user, text: text }
-          ).done(function (data) {
-            $('#chat-input').val('');
-            console.log(data)
-            console.log('send response: ' + JSON.stringify(data));
-          }).fail(function () {
-            alert('failed to send message');
-          }).always(function () {
-            $('#chat-input').removeAttr('disabled');
-            $('#chat-input').focus();
-            $('#chat-send-button').text('Send');
-            $('#chat-send-button').removeAttr('disabled');
-          });
-          finalTranscript = '';
-          return false;
-        };
+      var text = $('#chat-input').val();
+      if (text.length == 0) { return false }
 
+      $('#chat-input').attr('disabled', 'true');
+      $('#chat-send-button').attr('disabled', 'true');
+      $('#chat-send-button').text('Sending...');
+      $.post('/rooms/{{ room_id }}/messages/', { from: user, text: text }
+      ).done(function (data) {
+        $('#chat-input').val('');
+        console.log(data)
+        console.log('send response: ' + JSON.stringify(data));
+      }).fail(function () {
+        alert('failed to send message');
+      }).always(function () {
+        $('#chat-input').removeAttr('disabled');
         $('#chat-input').focus();
-      };
-
-      $(function () {
-        startChat('{{ user|escapejs }}');
+        $('#chat-send-button').text('Send');
+        $('#chat-send-button').removeAttr('disabled');
       });
-    </script>
-    {% endblock %}
+      finalTranscript = '';
+      return false;
+    };
+
+    $('#chat-input').focus();
+  };
+
+  $(function () {
+    startChat('{{ user|escapejs }}');
+  });
+</script>
+{% endblock %}

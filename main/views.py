@@ -14,6 +14,7 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from notifications.signals import notify
 from .summerize import summerize
+from .similarity import *
 
 
 def index(request):
@@ -22,13 +23,15 @@ def index(request):
 
 def create_meeting(request):
     users = User.objects.all()
-    meetings = Meeting.objects.all()
+    meetings = request.user.meetings.all()
 
     if request.method == 'POST':
         meetingForm = MeetingForm(request.POST)
         if meetingForm.is_valid():
             meeting = meetingForm.save()
-
+            if (not request.user in meeting.members.all()):
+                meeting.members.add(request.user)
+            meeting.save()
             if(meeting.previous_meeting):
                 previous_meeting = Meeting.objects.get(
                     pk=meeting.previous_meeting.id)
@@ -39,15 +42,13 @@ def create_meeting(request):
                 next_meeting = Meeting.objects.get(pk=meeting.next_meeting.id)
                 next_meeting.previous_meeting = meeting
                 next_meeting.save()
-
-            messages.success(request, 'Invites are successfully sent !')
     else:
         meetingForm = MeetingForm()
 
     context = {'meetingForm': meetingForm, 'users': users, 'meetings': meetings,
                'page_title': 'DASHBOARD', 'messages': messages.get_messages(request)}
 
-    return render(request, 'main/dashboard.html', context)
+    return render(request, 'main/dashboard_meeting.html', context)
 
 
 def send_confirmation_mail(request, emails=[]):
@@ -164,6 +165,10 @@ def start_meeting(request, id):
     return redirect('room', room_id=meeting.id)
 
 
+def go_to_meeting(request):
+    pass
+
+
 def confirm_invitation(request):
     users = User.objects.all()
     user = request.user
@@ -177,3 +182,26 @@ def confirm_invitation(request):
 
 def resume(request):
     pass
+
+
+def join_all(request, id):
+    meeting = Meeting.objects.get(pk=id)
+
+    topics = meeting.points
+
+    interventions = []
+
+    for user in meeting.members.all():
+        messages = user.messages.all()
+
+        interventions.append({
+            'user': user,
+            'messages': messages
+        })
+
+    return render(request, 'main/messages.html', {'meeting': meeting, 'interventions': interventions})
+
+
+def resume(request, id):
+    meeting = Meeting.objects.get(pk=id)
+    return render(request, 'main/resume.html', {'meeting': meeting})

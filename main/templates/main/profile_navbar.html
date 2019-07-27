@@ -1,8 +1,9 @@
-<nav class="navbar navbar-color-on-scroll navbar-transparent    fixed-top  navbar-expand-lg " color-on-scroll="100"
+{% load static %}
+<nav class="navbar navbar-color-on-scroll navbar-transparent fixed-top  navbar-expand-lg " color-on-scroll="100"
     id="sectionsNav">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href="{% url 'index' %}">
+            <a class="navbar-brand" href="{% url 'index' %}" style="font-size:30px;">
                 <b>
                     SmartMeeting
                 </b>
@@ -18,14 +19,14 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">
+                    <a class="nav-link" href="{% url 'index' %}" style="font-size:20px;">
                         <b>
-                            <i class="material-icons">home</i>Home
+                            <i class="material-icons" style="font-size:20px;">home</i>Home
                         </b>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
+                    <a class="nav-link" href="{% url 'dashboard' %}" style="font-size:20px;">
                         <b>
                             <i class="material-icons">dashboard</i>Dashboard
                         </b>
@@ -33,7 +34,7 @@
                 </li>
                 {% if user_profile == user %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create_meeting' %}">
+                    <a class="nav-link" href="{% url 'create_meeting' %}" style="font-size:20px;">
                         <b>
                             <i class="material-icons">add_circle</i>Create a new Meeting
                         </b>
@@ -41,21 +42,24 @@
                 </li>
                 {% endif %}
                 <li class="dropdown nav-item">
-                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" id="dropdownMenuButton"
+                        aria-haspopup="true" style="font-size:20px;">
                         <i class="material-icons">account_circle</i>
                     </a>
-                    <div class="dropdown-menu dropdown-with-icons">
-                        <a href="../index.html" class="dropdown-item">
+                    <div class="dropdown-menu dropdown-with-icons" aria-labelledby="dropdownMenuButton">
+                        <a href="{# url 'update' #}" class="dropdown-item" style="font-size:20px;">
                             <b>
                                 <i class="material-icons">settings</i> Settings
                             </b>
                         </a>
 
-                        <a href="{% url 'logout' %}" class="dropdown-item">
+                        <a href="{% url 'logout' %}" class="dropdown-item" style="font-size:20px;">
                             <i class="material-icons">exit_to_app</i> Logout
                         </a>
                     </div>
                 </li>
+
+                
             </ul>
         </div>
     </div>

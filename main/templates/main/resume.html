@@ -1,124 +1,75 @@
-<article>
+{% extends 'main/dashboard_base.html' %}
 
-    <div class="exemple_lct">
-        <h2>Formulaire</h2>
-    </div>
-    <div class="contenu-lct">
-        <div class="btn-telechargement-content_haut btn-telechargement-container">
-            <span data-download-id="245850" oo-trk="downloadable-content-bouton-lettre">
-                <a class="bt_rouge bt_fort icon icon-telecharger kDownloadDoc">
-                </a>
-            </span>
-        </div>
+{% load static %}
+{% block content %}
 
+<link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+<style>
+    .content {
+        font-family: 'Courgette', cursive;
+    }
+</style>
+
+<div class="row">
+    <div class="col-2"></div>
+    <div id="body" class="col-8 mb-5"
+        style="border: 2px solid black; border-radius: 10px; padding: 30px; box-shadow: 0px 0px 50px 5px gray; font-size: 25px">
+        <h2>Compte rendu de la {{ meeting.title }}</h2>
+        <hr>
 
         <div class="content-block-lct">
-            <h3>-</h3>
+            <h3></h3>
             <!-- <p><span class="txt_modifiable"></span></p> -->
             <!-- <p><span class="txt_modifiable"></span></p> -->
 
-            <p>Le <span class="txt_modifiable">{{ meeting.date }}</span>, à <span class="txt_modifiable">[heure]</span> <span
-                    class="txt_modifiable">{{ meeting.chairperson }}</span> a réuni les
-                personnes suivantes :</p>
+            <p>Le <span class="date">{{ meeting.date }}</span>, à <span class="date">{{ meeting.begin }}</span>
+                <span class="chairperson">{{ meeting.chairperson.first_name }}
+                    {{ meeting.chairperson.last_name }}</span> a réuni les personnes suivantes :</p>
             <ul>
-                {% for member in meeting.members %}
+                {% for member in meeting.members.all %}
                 <li>
                     <p><span class="txt_modifiable">{{ member.first_name }} {{ member.last_name }} </span></p>
                 </li>
                 {% endfor %}
             </ul>
-            <p>Il a été
-                procédé à l'examen des questions suivantes :</p>
+            <p>Il a été procédé à l'examen des questions suivantes :</p>
             <ul>
+                {% for point in meeting.points %}
                 <li>
-                    <p><span class="txt_modifiable">[1re
-                            question examinée]</span></p>
+                    <p><span class="point">{{ point }} </span></p>
                 </li>
-                <li>
-                    <p><span class="txt_modifiable">[2e
-                            question examinée]</span></p>
-                </li>
-                <li>
-                    <p><span class="txt_modifiable">[3e
-                            question examinée]</span></p>
-                </li>
-                <li>
-                    <p><span class="txt_modifiable">[4e
-                            question examinée]</span></p>
-                </li>
+                {% endfor %}
             </ul>
-            <p>Les participants
-                ont émis les avis suivants :</p>
-            <p>Au sujet de la
-                première question, à savoir <span class="txt_modifiable">[rappelez le
-                    sujet de la première question]</span> :</p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 1er participant au sujet de la première question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 2e participant au sujet de la première question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 3e participant au sujet de la première question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 4e participant au sujet de la première question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 5e participant au sujet de la première question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 6e participant au sujet de la première question]</span></p>
 
-            <p>Au sujet de la 2e
-                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 2e
-                    question]</span> :</p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 1er participant au sujet de la 2e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 2e participant au sujet de la 2e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 3e participant au sujet de la 2e question]</span></p>
-            <p><span class="txt_modifiable">[etc.]</span></p>
+            <p>Les participants ont émis les avis suivants :</p>
+            {% for point in meeting.points %}
+            <p> 
+                Au sujet de la question numéro {{forloop.counter}}, à savoir 
+                <span class="point">"{{ point }}"</span> : 
+            </p>
+                {% for point in meeting.points%}
+                <p>
+                    <span class="message">[avis exprimé par le participant numéro {{ forloop.counter }} au sujet de la question {{ forloop.counter }}]</span>
+                </p>
+                {% endfor %}
+            {% endfor %}
 
-            <p>Au sujet de la 3e
-                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 3e
-                    question]</span> :</p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 1er participant au sujet de la 3e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 2e participant au sujet de la 3e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 3e participant au sujet de la 3e question]</span></p>
-            <p><span class="txt_modifiable">[etc.]</span></p>
+            {% for decision in meeting.decisions %}
 
-            <p>Au sujet de la 4e
-                question, à savoir <span class="txt_modifiable">[rappelez le sujet de la 4e
-                    question]</span> :</p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 1er participant au sujet de la 4e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 2e participant au sujet de la 4e question]</span></p>
-            <p><span class="txt_modifiable">[avis
-                    exprimé par le 3e participant au sujet de la 4e question]</span></p>
-            <p><span class="txt_modifiable">[etc.]</span></p>
+            <p>Après discussion, il a été décidé de :</p>
+            <p>
+                <span class="decision">[décision prise après examen de la question numéro {{ forloop.counter }}]</span>
+            </p>
 
-            <p>Après
-                discussion, il a été décidé de :</p>
-            <p><span class="txt_modifiable">[décision
-                    prise après examen de la 1ere question]</span></p>
-            <p><span class="txt_modifiable">[décision
-                    prise après examen de la 2e question]</span></p>
-            <p><span class="txt_modifiable">[décision
-                    prise après examen de la 3e question]</span></p>
-            <p><span class="txt_modifiable">[décision
-                    prise après examen de la 4e question]</span></p>
-
-            <p>Pour la bonne
-                exécution des décisions prises, il est demandé en premier lie à :</p>
+            {% endfor %}
+            <p>Pour la bonne exécution des décisions prises, il est demandé en premier lie à :</p>
             <p><span class="txt_modifiable">[Nom
                     de la personne chargée d'exécuter la décision prise après étude
                     de la première question]</span> de <span class="txt_modifiable">[tâches
                     qu'elle devra exécuter]</span>.</p>
-            <p>En outre, <span class="txt_modifiable">[nom
-                    de la personne chargée d'exécuter la décision prise après étude
-                    de la 2e question]</span> est chargé de <span class="txt_modifiable">[tâches
-                    qu'elle devra exécuter]</span>.</p>
+            <p>En outre, <span class="txt_modifiable">[nom de la personne chargée d'exécuter la décision prise après
+                    étude de la 2e question]</span> est chargé de <span class="txt_modifiable">[tâches qu'elle devra
+                    exécuter]</span>.</p>
             <p>En ce qui
                 concerne <span class="txt_modifiable">[décision prise après examen de la
                     3e question]</span>, <span class="txt_modifiable">[nom de la personne
@@ -140,44 +91,62 @@
                 réunion aura lieu le <span class="txt_modifiable">[date et heure de la
                     prochaine réunion]</span>.</p>
 
-            <table>
-                <tr>
-                    <td>
-                        <p><span class="txt_modifiable">[Nom de la
-                                personne qui a organisé la réunion]</span>
-                        </p>
-                        <p><span class="txt_modifiable">[Signature]</span></p>
-                    </td>
-                    <td>
-                        <p><span class="txt_modifiable">[Nom d'un
-                                participant]</span></p>
-                        <p><span class="txt_modifiable">[Signature]</span></p>
-                    </td>
-                </tr>
-            </table>
+            <div>
+                <div>
+                    <p><span class="chairperson">{{ meeting.chairperson.first_name }}
+                            {{ meeting.chairperson.last_name }}</span>
+                    </p>
+                    <p><span class="txt_modifiable">[Signature]</span></p>
+                </div>
+                <div>
+                    <p><span class="txt_modifiable">[Nom d'un
+                            participant]</span></p>
+                    <p><span class="txt_modifiable">[Signature]</span></p>
+                </div>
+            </div>
         </div>
 
+    </div>
+    <div class="col-2 d-flex align-items-center flex-column">
+        <a class="btn btn-app">
+            <i class="fas fa-file-download"></i> Dowload
+        </a>
+        <a class="btn btn-app">
+            <i class="fas fa-edit"></i> Edit
+        </a>
+        <a class="btn btn-app">
+            <i class="fas fa-share-alt"></i> Share
+        </a>
 
-        <div class="form-group">
-            <label>Multiple</label>
-            <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State"
-                style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
-                <option data-select2-id="14">Alabama</option>
-                <option data-select2-id="15">Alaska</option>
-            </select>
-            <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr"
-                data-select2-id="8" style="width: 100%;">
-                <span class="selection">
-                    <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true"
-                        aria-expanded="false" tabindex="-1">
-                        <ul class="select2-selection__rendered">
-                            <li class="select2-search select2-search--inline">
-                                <input class="select2-search__field" type="search" tabindex="0" autocomplete="off"
-                                    autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox"
-                                    aria-autocomplete="list" placeholder="Select a State" style="width: 749px;"></li>
-                        </ul>
-                    </span>
-                </span>
-                <span class="dropdown-wrapper" aria-hidden="true"></span>
-            </span>
-        </div>
+    </div>
+</div>
+
+
+
+<button id="download" class="btn btn-success btn-block btn-lg offset-3 col-6 mb-3">Download as PDF</button>
+
+<script>
+    document.querySelector('#download').addEventListener('click',
+        () => {
+            // html2canvas(document.querySelector('#body'), {
+            //     onrendered: function (canvas) {
+
+            //         const img = canvas.toDataURL('image/png')
+            //         var doc = new jsPDF('p', 'px', [1048, 2267]); // A4 size page of PDF
+            //         doc.addImage(img, 'PNG')
+            //         doc.save("resume.pdf");
+            //     }
+            // })
+
+            var doc = new jsPDF('p', 'px', [1500, 2267]); // A4 size page of PDF
+            doc.fromHTML(document.querySelector('#body'), 20, 20);
+            doc.save("resume.pdf");
+        }
+
+
+    )
+
+
+</script>
+
+{% endblock %}

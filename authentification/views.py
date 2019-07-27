@@ -52,6 +52,9 @@ def register(request):
         if(str(password) == str(confirm_password)):
             user = User.objects.create_user(
                 first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+            user.profile = Profile(user=user, photo='anonym.png')
+            user.profile.save()
+            # user.profile.
             login(request, user)
             return render(request, 'main/index.html')
 

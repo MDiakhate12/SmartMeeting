@@ -26,8 +26,6 @@
         </a>
         Chairperson
         </figcaption>
-
-
     </figure>
 
     <div class="col-md-3 col-sm-6 col-12 flex-column">
@@ -48,7 +46,19 @@
             <!-- /.info-box-content -->
         </div>
         {% if not meeting.done and not meeting.doing %}
-        <center><a href="{% url 'start_meeting' meeting.id %}" type="button" class="btn btn-success btn-lg">Start Meeting</a>
+        <center><a href="{% url 'start_meeting' meeting.id %}" type="button" class="btn btn-success">Start Meeting</a>
+        </center>
+        {% endif %}
+
+        {% if meeting.doing %}
+        <center><a href="{% url 'room' meeting.id %}" type="button" class="btn btn-info">Go to Meeting</a>
+        </center>
+        {% endif %}
+
+        {% if meeting.done %}
+        <center>
+            <a href="{% url 'messages' meeting.id %}" type="button" class="btn btn-dark">Go to Messages</a>
+            <a href="{% url 'resume' meeting.id %}" type="button" class="btn btn-messageuse">Go to resume</a>
         </center>
         {% endif %}
         <!-- /.info-box -->

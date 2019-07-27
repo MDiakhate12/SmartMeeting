@@ -1,0 +1,75 @@
+{% extends 'main/dashboard_base.html' %}
+
+{% load static %}
+{% block content %}
+
+<h1>{{ meeting }}</h1>
+<hr>
+
+<!-- <div class="row"> -->
+<!-- <div class="col-4"> -->
+<div class="card-columns">
+
+    {% for intervention in interventions %}
+
+    <div class="card">
+        <center>
+            <img width="100" height="100" class="img-circle img-top" src="{{ intervention.user.profile.photo.url }}"
+                alt="profile_photo" style="position: relative; top: 5px">
+        </center>
+
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{% url 'profile' user.id %}" class="nav-link">
+
+                    <h2>{{ intervention.user.first_name }} {{ intervention.user.last_name }}
+                    </h2>
+                    <div class="text-muted">@{{ intervention.user.username }}</div>
+                </a>
+            </h5>
+            <p class="card-text">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Message</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for message in intervention.messages %}
+                        {% if forloop.counter < 3 %}
+                        <tr>
+                            <th scope="row">{{ message.date|date:"l d, H:i:s" }}</th>
+                            <td>{{ message }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr class="collapse" id="collapseExample{{ forloop.counter }}">
+                            <th scope="row">{{ message.date|date:"l d, H:i:s" }}</th>
+                            <td>{{ message }}</td>
+                        </tr>
+
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+                <center>
+                    <button class="btn btn-primary btn-block" type="button" data-toggle="collapse"
+                        data-target="#collapseExample{{ forloop.counter }}" aria-expanded="false"
+                        aria-controls="collapseExample{{ forloop.counter }}">
+                        See more 
+                    </button>
+                </center>
+            </p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">{{ meeting.obj }}</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- </div> -->
+<!-- </div> -->
+{% endblock %}

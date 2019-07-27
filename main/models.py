@@ -39,11 +39,10 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name='profile')
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE, blank=True, null=True)
     photo = models.ImageField(default='static/images/anonym.png')
-    job = models.CharField(max_length=100)
-    phone = models.IntegerField()
-    description = models.TextField(blank=True)
-    contacts = models.ManyToManyField(
-        'self', related_name='contacts', blank=True)
+    job = models.CharField(max_length=100, null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
+    description = models.TextField(null=True,blank=True)
+    contacts = models.ManyToManyField('self', related_name='contacts', blank=True)
 
     def __str__(self):
         return self.user.username + "_profile"
