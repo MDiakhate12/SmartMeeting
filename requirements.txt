@@ -7,7 +7,7 @@ autobahn==19.7.1
 Automat==0.7.0
 autopep8==1.4.4
 blis==0.2.4
-certifi==2019.6.16
+certifi==2022.12.7
 cffi==1.12.3
 channels==2.1.5
 chardet==3.0.4
